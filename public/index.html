@@ -1,0 +1,48 @@
+<html>
+<head>
+  <style>
+    body { 
+      font-family: sans-serif;
+      font-size: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div id="results"></div>
+<script>
+  let dictionary;
+  const resultsDiv = document.getElementById('results');
+  console.log(resultsDiv);
+  const logResults = (str) => {
+    console.log(str);
+    resultsDiv.innerHTML = `${resultsDiv.innerHTML} ${str} <br>`;
+  }
+  const checkWordPair = () => {
+    resultsDiv.innerHTML = '';
+    const word = dictionary[Math.floor(Math.random() * dictionary.length)];
+    let found = false;
+    let startTime = new Date().getTime();
+    logResults(`word: <b>${word}</b>`);
+    for (var i = 1; i < word.length; i++) {
+      const word0 = word.substr(0, i);
+      const word1 = word.substr(i);
+      logResults(`${i} ${word0} ${word1}`);
+      if (dictionary.includes(word0) && dictionary.includes(word1)) {
+        logResults(`found <b>${word0} ${word1}</b>`);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      logResults('<b>not found</b>');
+    }
+    logResults('time: ' + (new Date().getTime() - startTime));
+    setTimeout(checkWordPair, 2000);
+  }
+
+  (async(id) => {
+    dictionary = await (await fetch('./words.json')).json();
+    checkWordPair()
+  })();
+</script>
+</body>
