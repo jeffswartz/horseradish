@@ -36,7 +36,7 @@
     if (!found) {
       logResults('<b>not found</b>');
     }
-    logResults('time: ' + (new Date().getTime() - startTime));
+    logResults(`time: ${new Date().getTime() - startTime} ms`);
     setTimeout(checkWordPair, 2000);
   }
 
